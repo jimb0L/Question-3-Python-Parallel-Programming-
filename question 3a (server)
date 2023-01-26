@@ -1,0 +1,64 @@
+import socket
+import random
+
+from _thread import *
+import threading
+
+
+print_lock = threading.Lock()
+quote = ["If someone treats you like a toy, be like Annabelle",
+         "Demi masa ! Sesungguhnya manusia itu dalam kerugian kecuali orang-orang yang beriman dan beramal soleh, dan m>host = ""
+port = 6969
+
+def threaded(c):
+        while True:
+
+
+                data = c.recv(1024)
+                if not data:
+                        print('Ciao')
+
+                        print_lock.release()
+                        break
+
+
+
+                data = quote[random.randint(0,1)].encode()
+
+
+                c.send(data)
+
+
+        c.close()
+
+
+def Main():
+
+
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((host, port))
+        print("socket binded to port", port)
+
+
+        s.listen(5)
+        print("socket is listening")
+
+
+
+        while True:
+
+
+                c, addr = s.accept()
+
+
+                print_lock.acquire()
+                print('Connected to :', addr[0], ':', addr[1])
+
+
+                start_new_thread(threaded, (c,))
+        s.close()
+
+
+if __name__ == '__main__':
+        Main()
